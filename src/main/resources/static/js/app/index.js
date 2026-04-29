@@ -4,13 +4,23 @@ var main = {
         $('#btn-save').on('click', function () {
             _this.save();
         });
-
         $('#btn-update').on('click', function () {
-                    _this.update();
-                });
+            _this.update();
+        });
         $('#btn-delete').on('click', function () {
-                     _this.delete();
-                });
+            _this.delete();
+        });
+    },
+    validateForm : function (data) {
+        if (!data.title || data.title.trim() === '') {
+            alert('제목을 입력해주세요.');
+            return false;
+        }
+        if (!data.content || data.content.trim() === '') {
+            alert('내용을 입력해주세요.');
+            return false;
+        }
+        return true;
     },
     save : function () {
         var data = {
@@ -18,6 +28,9 @@ var main = {
             author:  $('#author').val(),
             content: $('#content').val()
         };
+        if (!main.validateForm(data)) {
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: '/api/v1/posts',
@@ -32,11 +45,14 @@ var main = {
         });
     },
     update : function () {
-        var id = $('#id').val();
         var data = {
             title:   $('#title').val(),
             content: $('#content').val()
         };
+        if (!main.validateForm(data)) {
+            return;
+        }
+        var id = $('#id').val();
         $.ajax({
             type: 'PUT',
             url: '/api/v1/posts/' + id,
@@ -50,10 +66,8 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
-
     delete : function () {
         var id = $('#id').val();
-
         $.ajax({
             type: 'DELETE',
             url: '/api/v1/posts/' + id,
@@ -65,7 +79,7 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
-        },
+    }
 };
 
 main.init();
