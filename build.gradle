@@ -49,6 +49,9 @@ dependencies {
     //Spring Security
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
 
+    // 🆕 Day 4 (5-5) — 세션 저장소를 DB 로
+    implementation 'org.springframework.session:spring-session-jdbc'
+
 
     // Lombok 설정
     compileOnly 'org.projectlombok:lombok'
